@@ -12,6 +12,7 @@ public class ThirdPersonController : MonoBehaviour
     public Animator animator;
     PhotonView view;
     public Camera cam;
+    Health healthScript;
     
  
     void Start()
@@ -20,6 +21,7 @@ public class ThirdPersonController : MonoBehaviour
         view = GetComponent<PhotonView>();
         animator = GetComponent<Animator>();
         cam = Camera.main;
+        healthScript = FindObjectOfType<Health>();
          
       
         if(!view.IsMine)
@@ -56,6 +58,18 @@ public class ThirdPersonController : MonoBehaviour
         
         }
        
+    }
+
+    private void OnTriggerEnter(Collider collision)
+     {
+        if(view.IsMine)
+        {
+        if (collision.tag == "Enemy")
+        {  
+            healthScript.TakeDamage();
+        }
+        }
+        
     }
     
 }
