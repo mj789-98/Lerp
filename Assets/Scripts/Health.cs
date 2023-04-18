@@ -10,6 +10,8 @@ public class Health : MonoBehaviour
 
    PhotonView view;
 
+   public GameObject gameOver;
+
    private void  Start() {
     {
           view = GetComponent<PhotonView>();
@@ -26,6 +28,11 @@ public class Health : MonoBehaviour
 void TakeDamageRPC()
 {
         health--;
+
+        if(health <=0)
+        {
+          gameOver.SetActive(true);
+        }
         healthDisplay.text = health.ToString();
 }
 }

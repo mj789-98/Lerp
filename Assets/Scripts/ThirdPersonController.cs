@@ -1,10 +1,14 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
+using TMPro;
 
 
 
 public class ThirdPersonController : MonoBehaviour
 {
+   // public Text nameDisplay;
+    public TextMeshProUGUI textMesh;
     public float moveSpeed = 10f;
     public float turnSpeed = 50f;
     public float jumpForce = 5f;
@@ -13,6 +17,9 @@ public class ThirdPersonController : MonoBehaviour
     PhotonView view;
     public Camera cam;
     Health healthScript;
+
+    LineRenderer rend;
+    
     
  
     void Start()
@@ -22,6 +29,16 @@ public class ThirdPersonController : MonoBehaviour
         animator = GetComponent<Animator>();
         cam = Camera.main;
         healthScript = FindObjectOfType<Health>();
+        rend = FindObjectOfType<LineRenderer>(); 
+
+        if(view.IsMine)
+        {
+            textMesh.text = PhotonNetwork.NickName;
+        }
+        else
+        {
+            textMesh.text = view.Owner.NickName;
+        }
          
       
         if(!view.IsMine)
@@ -42,7 +59,8 @@ public class ThirdPersonController : MonoBehaviour
         transform.position += transform.forward * moveZ * moveSpeed * Time.deltaTime;
        animator.SetBool("IsMoving", moveZ != 0);
         transform.Rotate(0f, moveX * turnSpeed * Time.deltaTime, 0f);
-        
+
+        rend.SetPosition(0, transform.position); 
  
         if (Input.GetButtonDown("Jump"))
         {
@@ -57,20 +75,23 @@ public class ThirdPersonController : MonoBehaviour
     }
         
         }
+        else {
+            rend.SetPosition(1, transform.position);
+        }
        
     }
 
-    private void OnTriggerEnter(Collider collision)
-     {
-        if(view.IsMine)
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (view.IsMine)
         {
-        if (collision.tag == "Enemy")
-        {  
-            healthScript.TakeDamage();
+            if (collision.gameObject.tag == "Enemy")
+            {
+               healthScript.TakeDamage();
+            }
         }
-        }
-        
     }
-    
+
+   
 }
 

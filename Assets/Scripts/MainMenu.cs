@@ -8,7 +8,15 @@ using Photon.Realtime;
 public class MainMenu : MonoBehaviourPunCallbacks
 {
   public InputField createInput;
-  public InputField joinInput;
+  public InputField joinInput; 
+  public InputField nameInput;
+
+  public void ChangeName()
+
+  {
+    PhotonNetwork.NickName = nameInput.text;
+
+  }
  
 
 
