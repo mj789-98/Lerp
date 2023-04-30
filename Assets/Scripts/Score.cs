@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class Score : MonoBehaviour
 {
-    public int score = 0;
+    public  int score = 0;
     PhotonView view;
     public Text scoreDisplay;
      

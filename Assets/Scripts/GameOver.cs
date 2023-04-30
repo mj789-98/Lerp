@@ -14,7 +14,7 @@ public class GameOver : MonoBehaviour
   {
     view = GetComponent<PhotonView>();
     scoreDisplay.text = FindObjectOfType<Score>().score.ToString(); 
-
+  
     if(PhotonNetwork.IsMasterClient == false)
     {
         restartButton.SetActive(false);

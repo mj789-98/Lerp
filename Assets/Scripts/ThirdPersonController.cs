@@ -7,11 +7,11 @@ using TMPro;
 
 public class ThirdPersonController : MonoBehaviour
 {
-   // public Text nameDisplay;
-    public TextMeshProUGUI textMesh;
+   public Text nameDisplay;
+    //public TextMeshProUGUI textMesh;
     public float moveSpeed = 10f;
     public float turnSpeed = 50f;
-    public float jumpForce = 5f;
+    public float jumpForce = 10f;
     private Rigidbody rb;
     public Animator animator;
     PhotonView view;
@@ -33,11 +33,11 @@ public class ThirdPersonController : MonoBehaviour
 
         if(view.IsMine)
         {
-            textMesh.text = PhotonNetwork.NickName;
+            nameDisplay.text = PhotonNetwork.NickName;
         }
         else
         {
-            textMesh.text = view.Owner.NickName;
+            nameDisplay.text = view.Owner.NickName;
         }
          
       
@@ -64,8 +64,9 @@ public class ThirdPersonController : MonoBehaviour
  
         if (Input.GetButtonDown("Jump"))
         {
-             animator.SetBool("IsJumping", true);
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+             
+            rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
+                animator.SetBool("IsJumping", true);
            
 
         }
